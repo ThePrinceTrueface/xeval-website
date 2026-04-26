@@ -91,14 +91,15 @@ export const Chatbot = () => {
         - Unified Context: $$key syntax for sharing variables.
         - Core Engines: ScriptEngine, HtmlEngine, CSSEngine.
         - Lifecycle: Prepare -> Run pattern, data-xeval-key, cleanup.
-        - Remote & Cache (v5.1.0): loadFrom with TTL memory cache and stale fallback.
-        - Dual Callbacks (v5.1.0): onInject hooks at engine level and individual run level.
+        - Remote & Cache (v5.0.1): loadFrom with TTL memory cache, stale fallback, and cache management (clearCache, isCached).
+        - Dual Callbacks (v5.0.2): onInject hooks at engine level and individual run level, with async support.
 
         Site Routes:
         - / : Home (Overview)
         - /why : Philosophy, security, use cases (mods, hot-patching, micro-plugins).
         - /features : Detailed list of capabilities.
         - /contact : Contact the Ebinasoft HQ.
+        - /changelog : Discover all new features and version history.
         - /docs/intro : Introduction to Unified Runtime.
         - /docs/install : npm i xeval or CDN.
         - /playground : Interactive playground (CodePen style).

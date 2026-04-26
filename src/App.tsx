@@ -9,6 +9,7 @@ import { DocumentationLayout } from './pages/DocumentationLayout';
 import * as Doc from './pages/DocPages';
 import { Why } from './pages/Why';
 import { Playground } from './pages/Playground';
+import { Changelog } from './pages/Changelog';
 import { Contact } from './pages/Contact';
 import { NextPageWidget } from './components/NextPageWidget';
 import { Navigate } from 'react-router-dom';
@@ -56,6 +57,7 @@ export default function App() {
             <Route path="/why" element={<Why />} />
             <Route path="/features" element={<Features />} />
             <Route path="/playground" element={<Playground />} />
+            <Route path="/changelog" element={<Changelog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/docs" element={<DocumentationLayout />}>
               <Route index element={<Navigate to="/docs/intro" />} />

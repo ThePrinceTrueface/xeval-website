@@ -2,7 +2,7 @@ import { auth, db, googleProvider, signInWithPopup, signOut, collection, addDoc,
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X, ChevronDown, Github } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 export const Navbar = ({ user }: { user: User | null }) => {
@@ -32,12 +32,10 @@ export const Navbar = ({ user }: { user: User | null }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Why?', path: '/why' },
-    { name: 'Features', path: '/features' },
+  const exploreLinks = [
     { name: 'Playground', path: '/playground' },
-    { name: 'Documentation', path: '/docs' },
+    { name: 'Features', path: '/features' },
+    { name: 'Changelog', path: '/changelog' },
     { name: 'Contact', path: '/contact' }
   ];
 
@@ -50,14 +48,31 @@ export const Navbar = ({ user }: { user: User | null }) => {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8 text-[10px] font-mono uppercase tracking-[0.2em] text-white/50">
-          {navLinks.map((link) => (
-            link.path.startsWith('/#') ? (
-               <a key={link.name} href={link.path} className="hover:text-accent-green transition-colors">{link.name}</a>
-            ) : (
-               <Link key={link.name} to={link.path} className={`hover:text-accent-green transition-colors ${location.pathname === link.path ? 'text-accent-green' : ''}`}>{link.name}</Link>
-            )
-          ))}
-          <a href="https://github.com/ThePrinceTrueface/xeval.js" target="_blank" rel="noopener noreferrer" className="hover:text-accent-green transition-colors">GitHub</a>
+          <Link to="/why" className={`hover:text-accent-green transition-colors ${location.pathname === '/why' ? 'text-accent-green' : ''}`}>Why xeval?</Link>
+          <Link to="/docs" className={`hover:text-accent-green transition-colors ${location.pathname.startsWith('/docs') ? 'text-accent-green' : ''}`}>Documentation</Link>
+          
+          <div className="relative group">
+            <button className="flex items-center gap-1 hover:text-accent-green transition-colors focus:outline-none">
+              Discover <ChevronDown size={12} className="opacity-50 transition-transform group-hover:rotate-180" />
+            </button>
+            <div className="absolute top-full -left-4 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="glass border border-white/10 flex flex-col min-w-[160px] rounded-sm backdrop-blur-xl bg-[#0a0a0b]/90 shadow-2xl overflow-hidden py-1">
+                {exploreLinks.map(link => (
+                  <Link 
+                    key={link.name} 
+                    to={link.path} 
+                    className={`px-4 py-2 hover:bg-white/5 hover:text-accent-green transition-colors ${location.pathname === link.path ? 'text-accent-green bg-white/5' : ''}`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <a href="https://github.com/ThePrinceTrueface/xeval" target="_blank" rel="noopener noreferrer" className="hover:text-accent-green transition-colors flex items-center gap-2">
+            <Github size={14} /> GitHub
+          </a>
           
           {user ? (
             <div className="flex items-center gap-4">
@@ -93,19 +108,29 @@ export const Navbar = ({ user }: { user: User | null }) => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden absolute top-full left-0 right-0 glass border-t border-white/10 p-6 flex flex-col gap-4 text-center"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden absolute top-full left-0 right-0 glass border-t border-white/10 flex flex-col text-[11px] font-mono uppercase tracking-widest text-white/70 overflow-hidden"
           >
-            {navLinks.map((link) => (
-               link.path.startsWith('/#') ? (
-                 <a key={link.name} href={link.path} onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-neon-cyan">{link.name}</a>
-               ) : (
-                 <Link key={link.name} to={link.path} onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-neon-cyan">{link.name}</Link>
-               )
-            ))}
-            <a href="https://github.com/ThePrinceTrueface/xeval.js" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-neon-cyan">Source</a>
+            <div className="flex flex-col py-4 px-6 gap-4">
+              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 hover:text-accent-green">Home</Link>
+              <Link to="/why" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 hover:text-accent-green">Why xeval?</Link>
+              <Link to="/docs" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 hover:text-accent-green">Documentation</Link>
+              
+              <div className="py-2 text-white/30 font-bold">Discover</div>
+              <div className="flex flex-col gap-2 pl-4 border-l border-white/10 ml-2">
+                {exploreLinks.map(link => (
+                  <Link key={link.name} to={link.path} onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-accent-green">
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+
+              <a href="https://github.com/ThePrinceTrueface/xeval" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} className="py-2 mt-2 flex items-center justify-center gap-2 border border-white/10 rounded-sm hover:text-accent-green hover:border-accent-green/50">
+                <Github size={14} /> Source Code
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
