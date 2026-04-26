@@ -38,7 +38,7 @@ export const Navbar = ({ user }: { user: User | null }) => {
     { name: 'Features', path: '/features' },
     { name: 'Playground', path: '/playground' },
     { name: 'Documentation', path: '/docs' },
-    { name: 'Terminal', path: '/#feedback' }
+    { name: 'Contact', path: '/contact' }
   ];
 
   return (
