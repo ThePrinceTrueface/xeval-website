@@ -56,7 +56,7 @@ export const Navbar = ({ user }: { user: User | null }) => {
               Discover <ChevronDown size={12} className="opacity-50 transition-transform group-hover:rotate-180" />
             </button>
             <div className="absolute top-full -left-4 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-              <div className="glass border border-white/10 flex flex-col min-w-[160px] rounded-sm backdrop-blur-xl bg-[#0a0a0b]/90 shadow-2xl overflow-hidden py-1">
+              <div className="glass border border-white/10 flex flex-col min-w-[160px] rounded-sm backdrop-blur-xl bg-black/60 shadow-2xl overflow-hidden py-1">
                 {exploreLinks.map(link => (
                   <Link 
                     key={link.name} 
@@ -111,7 +111,7 @@ export const Navbar = ({ user }: { user: User | null }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden absolute top-full left-0 right-0 glass border-t border-white/10 flex flex-col text-[11px] font-mono uppercase tracking-widest text-white/70 overflow-hidden"
+            className="md:hidden absolute top-full left-0 right-0 backdrop-blur-xl bg-black/80 border-t border-white/10 flex flex-col text-[11px] font-mono uppercase tracking-widest text-white/70 overflow-hidden"
           >
             <div className="flex flex-col py-4 px-6 gap-4">
               <Link to="/" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 hover:text-accent-green">Home</Link>
