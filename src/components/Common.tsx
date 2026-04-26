@@ -89,7 +89,7 @@ export const FeatureCard = ({ icon: Icon, title, description, index }: { icon: a
   </motion.div>
 );
 
-export const CodeBlock = ({ code, language = "javascript" }: { code: string, language?: string }) => {
+export const CodeBlock = ({ code, language = "javascript", compact = false }: { code: string, language?: string, compact?: boolean }) => {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
@@ -99,14 +99,14 @@ export const CodeBlock = ({ code, language = "javascript" }: { code: string, lan
   };
 
   return (
-    <div className="terminal-window my-6 group">
-      <div className="terminal-header">
+    <div className={`terminal-window ${compact ? 'my-2' : 'my-6'} group`}>
+      <div className={`terminal-header ${compact ? 'px-3 py-1.5' : ''}`}>
         <div className="flex gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-          <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+          <div className={`${compact ? 'w-2 h-2' : 'w-2.5 h-2.5'} rounded-full bg-red-500/50`} />
+          <div className={`${compact ? 'w-2 h-2' : 'w-2.5 h-2.5'} rounded-full bg-yellow-500/50`} />
+          <div className={`${compact ? 'w-2 h-2' : 'w-2.5 h-2.5'} rounded-full bg-green-500/50`} />
         </div>
-        <div className="text-[10px] uppercase tracking-widest text-white/30 font-mono">
+        <div className={`text-[10px] uppercase tracking-widest text-white/30 font-mono ${compact ? 'opacity-70 text-[9px]' : ''}`}>
           {language}.sys
         </div>
         <button 
@@ -114,7 +114,7 @@ export const CodeBlock = ({ code, language = "javascript" }: { code: string, lan
           className="text-white/40 hover:text-accent-green transition-colors"
           title="Copy"
         >
-          {copied ? <Check size={14} className="text-accent-green" /> : <Copy size={14} />}
+          {copied ? <Check size={compact ? 12 : 14} className="text-accent-green" /> : <Copy size={compact ? 12 : 14} />}
         </button>
       </div>
       <div className="p-0 overflow-x-auto bg-black/40">
@@ -123,9 +123,9 @@ export const CodeBlock = ({ code, language = "javascript" }: { code: string, lan
           style={customCodeStyle}
           customStyle={{
             background: 'transparent',
-            padding: '1.5rem',
+            padding: compact ? '0.75rem' : '1.5rem',
             margin: '0',
-            fontSize: '0.875rem',
+            fontSize: compact ? '0.7rem' : '0.875rem',
             lineHeight: '1.5',
           }}
           showLineNumbers={true}

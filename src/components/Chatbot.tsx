@@ -4,6 +4,26 @@ import { MessageSquare, X, Send, Bot, ExternalLink, Loader2 } from 'lucide-react
 import { GoogleGenAI } from '@google/genai';
 import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import { CodeBlock } from './Common';
+
+const markdownComponents = {
+  pre(props: any) {
+    // Return children directly to remove the extra wrapper around CodeBlock
+    // and prevent the "block within a block" styling issue.
+    return <>{props.children}</>;
+  },
+  code(props: any) {
+    const { children, className, node, ...rest } = props;
+    const match = /language-(\w+)/.exec(className || '');
+    return match ? (
+      <CodeBlock code={String(children).replace(/\n$/, '')} language={match[1]} compact={true} />
+    ) : (
+      <code className="bg-black/30 rounded px-1 py-0.5 text-accent-green" {...rest}>
+        {children}
+      </code>
+    );
+  }
+};
 
 // Initialize Gemini
 let ai: GoogleGenAI | null = null;
@@ -40,7 +60,7 @@ const Typewriter = ({ text, speed = 10, onComplete, onCharTyped }: { text: strin
 
   return (
     <div className="relative">
-      <ReactMarkdown>{displayedText}</ReactMarkdown>
+      <ReactMarkdown components={markdownComponents}>{displayedText}</ReactMarkdown>
       {index < text.length && (
         <motion.span
           animate={{ opacity: [0, 1, 0] }}
@@ -245,7 +265,7 @@ export const Chatbot = () => {
                             }}
                           />
                         ) : (
-                          <ReactMarkdown>{msg.text}</ReactMarkdown>
+                          <ReactMarkdown components={markdownComponents}>{msg.text}</ReactMarkdown>
                         )}
                       </div>
                     )}
