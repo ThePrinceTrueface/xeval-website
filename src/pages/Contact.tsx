@@ -11,18 +11,37 @@ export const Contact = () => {
   });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.message.trim()) return;
 
     setStatus('submitting');
     
-    // Simuler l'envoi de l'email / requête API
-    setTimeout(() => {
-      setStatus('success');
-      setFormData({ name: '', email: '', type: 'suggestion', message: '' });
-      setTimeout(() => setStatus('idle'), 5000);
-    }, 1500);
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/princetrueface@gmail.com", {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            name: formData.name || "Anonyme",
+            email: formData.email || "Non renseigné",
+            subject: `Contact Ebinasoft - ${formData.type}`,
+            message: formData.message
+        })
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', type: 'suggestion', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du message:", error);
+      setStatus('error');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -75,6 +94,26 @@ export const Contact = () => {
                 className="mt-6 px-6 py-2 border border-border-dark text-white/70 hover:text-accent-green hover:border-accent-green transition-all uppercase text-xs font-mono tracking-widest"
               >
                 Nouveau Message
+              </button>
+            </motion.div>
+          ) : status === 'error' ? (
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="py-12 flex flex-col items-center justify-center text-center space-y-4"
+            >
+              <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 mb-4 shadow-[0_0_30px_rgba(239,68,68,0.2)]">
+                <AlertCircle size={32} />
+              </div>
+              <h3 className="text-2xl font-bold italic tracking-tight text-white">Erreur de Transmission</h3>
+              <p className="text-white/50 font-mono text-sm max-w-md">
+                Une erreur réseau est survenue lors de l'envoi. Veuillez vérifier votre connexion et réessayer.
+              </p>
+              <button 
+                onClick={() => setStatus('idle')}
+                className="mt-6 px-6 py-2 border border-border-dark text-white/70 hover:text-red-500 hover:border-red-500 transition-all uppercase text-xs font-mono tracking-widest"
+              >
+                Réessayer
               </button>
             </motion.div>
           ) : (

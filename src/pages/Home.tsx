@@ -23,7 +23,7 @@ export const Home = ({ user }: { user: User | null }) => {
 
   useEffect(() => {
     const currentUrl = window.location.origin;
-    setCdnLink(`<script src="${currentUrl}/xeval.js" type="module"></script>`);
+    setCdnLink(`<script src="${currentUrl}/xeval.min.js" type="module"></script>`);
   }, []);
 
   return (
@@ -133,7 +133,7 @@ export const Home = ({ user }: { user: User | null }) => {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
           <div className="lg:col-span-3">
             <CodeBlock code={`// Importez xeval et préparez vos sources (JS, HTML, CSS)
-import xeval from '@ebinasoft/xeval';
+import xeval from 'xeval';
 
 // Moteur de Script
 const script = xeval.prepare(\`
@@ -208,11 +208,11 @@ ui.inject({ context: { status: "Online" } });`} />
               Téléchargez le fichier source complet pour une gestion locale de vos ressources. Inclut les types JSDoc pour une intelligence native dans VS Code.
             </p>
             <a 
-              href="/xeval.js" 
+              href="/xeval.min.js" 
               download
               className="w-full flex items-center justify-center gap-3 py-4 bg-accent-green text-black font-bold rounded-xl hover:bg-accent-green/80 transition-all active:scale-95 shadow-lg shadow-accent-green/20 uppercase tracking-widest text-sm"
             >
-              <Download size={20} /> Download xeval.js
+              <Download size={20} /> Download xeval.min.js
             </a>
           </div>
         </div>

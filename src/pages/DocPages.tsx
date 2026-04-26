@@ -50,12 +50,12 @@ export const DocInstall = () => (
       <div className="space-y-8">
         <div className="space-y-2">
           <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/30 px-2 py-1 border border-white/10">ES Module (Mainstream)</span>
-          <CodeBlock code={`import xeval from '@ebinasoft/xeval';`} />
+          <CodeBlock code={`import xeval from 'xeval';`} />
         </div>
         <div className="space-y-2">
           <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/30 px-2 py-1 border border-white/10">Zero-Config CDN</span>
           <CodeBlock code={`<!-- Chargez xeval en haut de votre document -->
-<script src="https://cdn.example.com/xeval.js" type="module"></script>`} />
+<script src="https://cdn.example.com/xeval.min.js" type="module"></script>`} />
         </div>
         <div className="space-y-2">
             <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/30 px-2 py-1 border border-white/10">Package Manager</span>
@@ -208,13 +208,44 @@ export const DocRemote = () => (
   <DocContentWrapper>
     <div className="space-y-10 border-l-4 border-purple-500/20 pl-8">
       <div>
-        <h3 className="text-4xl font-bold uppercase italic mb-4 text-purple-400">Remote Loading</h3>
+        <h3 className="text-4xl font-bold uppercase italic mb-4 text-purple-400">Remote & Cache</h3>
         <p className="text-white/70 max-w-2xl">
-           La méthode <code className="text-purple-400">loadFrom</code> analyse l'URL pour détecter automatiquement l'extension.
+           La méthode <code className="text-purple-400">loadFrom</code> analyse l'URL pour détecter automatiquement l'extension et inclut un système de cache intelligent.
         </p>
       </div>
-      <CodeBlock code={`const engine = await xeval.loadFrom('https://cdn.io/style.css');
-engine.run({ context: { primary: '#0f0' } });`} />
+      <CodeBlock code={`// Définir un TTL pour le cache
+const engine = await xeval.loadFrom('/api/plugin', { type: 'js', ttl: 5 * 60 * 1000 });
+engine.run({ context: { mode: 'prod' } });
+
+// Gestion du cache global
+xeval.isCached('/api/plugin'); // true | false
+xeval.clearCache('/api/plugin'); // Vider l'entrée spécifique
+xeval.clearCache(); // Vider tout le cache`} />
+    </div>
+  </DocContentWrapper>
+);
+
+export const DocCallbacks = () => (
+  <DocContentWrapper>
+    <div className="space-y-10 border-l-4 border-yellow-500/20 pl-8">
+      <div>
+        <h3 className="text-4xl font-bold uppercase italic mb-4 text-yellow-500">Dual Callback System</h3>
+        <p className="text-white/70 max-w-2xl">
+          xeval 5.1.0 introduit un système de callbacks à deux niveaux (moteur et run) permettant d'interagir nativement avec les éléments tout juste injectés.
+        </p>
+      </div>
+      <CodeBlock code={`const engine = xeval.prepareHTML(\`<p>$$text</p>\`)
+  // Callback niveau moteur (s'applique à toutes les injections)
+  .onInject((el, key) => {
+    el.classList.add('fade-in');
+    console.log('Engine callback — key:', key);
+  });
+
+// Callback niveau 'run' (s'applique uniquement ici)
+engine.run({
+  context: { text: 'Hello' },
+  onInject: (el, key) => console.log('Run callback — key:', key)
+});`} />
     </div>
   </DocContentWrapper>
 );
@@ -235,8 +266,16 @@ export const DocApi = () => (
           <tr><td className="py-6 text-accent-green">prepareHTML(source: string)</td><td className="py-6 text-white/50">HtmlEngine</td></tr>
           <tr><td className="py-6 text-accent-green">prepareCSS(source: string)</td><td className="py-6 text-white/50">CSSEngine</td></tr>
           <tr><td className="py-6 text-accent-green">loadFrom(url: string, options?: object)</td><td className="py-6 text-white/50">Promise&lt;Engine&gt;</td></tr>
-          <tr><td className="py-6 text-accent-green">getByKey(key: string)</td><td className="py-6 text-white/50">Element | null</td></tr>
-          <tr><td className="py-6 text-accent-green">cleanup() / cleanupOne(key: string)</td><td className="py-6 text-white/50">void / boolean</td></tr>
+          <tr><td className="py-6 text-accent-green">clearCache(url?: string)</td><td className="py-6 text-white/50">void</td></tr>
+          <tr><td className="py-6 text-accent-green">isCached(url: string)</td><td className="py-6 text-white/50">boolean</td></tr>
+          <tr><td className="py-6 text-accent-green">cacheInfo(url: string)</td><td className="py-6 text-white/50">object | null</td></tr>
+          <tr><td className="py-6 text-accent-green">engine.run(options?: object)</td><td className="py-6 text-white/50">HTMLElement</td></tr>
+          <tr><td className="py-6 text-accent-green">engine.update(options?: object)</td><td className="py-6 text-white/50">Element | null</td></tr>
+          <tr><td className="py-6 text-accent-green">engine.getByKey(key: string)</td><td className="py-6 text-white/50">Element | null</td></tr>
+          <tr><td className="py-6 text-accent-green">engine.onInject(callback)</td><td className="py-6 text-white/50">this</td></tr>
+          <tr><td className="py-6 text-accent-green">engine.cleanup() / cleanupOne(key)</td><td className="py-6 text-white/50">void / boolean</td></tr>
+          <tr><td className="py-6 text-accent-green">engine.render(options?: object)</td><td className="py-6 text-white/50">string</td></tr>
+          <tr><td className="py-6 text-accent-green">engine.lastKey / lastInjected / keys</td><td className="py-6 text-white/50">string | Element | string[]</td></tr>
         </tbody>
       </table>
     </div>

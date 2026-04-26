@@ -34,14 +34,14 @@ export const Features = () => {
           <FeatureCard 
             index={4}
             icon={Search} 
-            title="Auto-Detection" 
-            description="loadFrom automatically identifies the resource type from URL extensions for zero-config remote loading."
+            title="Smart Caching" 
+            description="loadFrom automatically identifies extensions and features built-in caching with TTL and stale fallbacks."
           />
           <FeatureCard 
             index={5}
             icon={Check} 
-            title="Ultra Lightweight" 
-            description="Under 2KB gzipped. Zero dependencies. Engineered for high-frequency dynamic assembly."
+            title="Dual Callbacks" 
+            description="Register fine-grained onInject hooks at both the engine level and the individual run level."
           />
         </div>
       </div>

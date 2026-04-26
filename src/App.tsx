@@ -69,6 +69,7 @@ export default function App() {
               <Route path="lifecycle" element={<Doc.DocLifecycle />} />
               <Route path="updates" element={<Doc.DocUpdates />} />
               <Route path="remote" element={<Doc.DocRemote />} />
+              <Route path="callbacks" element={<Doc.DocCallbacks />} />
               <Route path="api" element={<Doc.DocApi />} />
             </Route>
           </Routes>

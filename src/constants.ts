@@ -23,7 +23,8 @@ export const DOC_STRUCTURE = [
       { id: "templates", name: "Template Syntax", icon: Layers, path: "/docs/templates" },
       { id: "lifecycle", name: "Lifecycle & Cleanup", icon: Trash2, path: "/docs/lifecycle" },
       { id: "updates", name: "Stateful Updates", icon: RefreshCw, path: "/docs/updates" },
-      { id: "remote", name: "Remote Loading", icon: Search, path: "/docs/remote" }
+      { id: "remote", name: "Remote & Cache", icon: Search, path: "/docs/remote" },
+      { id: "callbacks", name: "Dual Callbacks", icon: Zap, path: "/docs/callbacks" }
     ]
   },
   {
