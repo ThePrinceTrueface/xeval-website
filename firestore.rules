@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Comment Validation ---
+    function isValidComment(data) {
+      return data.keys().hasAll(['text', 'userId', 'userName', 'createdAt']) 
+        && data.keys().size() >= 4 
+        && data.keys().size() <= 10
+        && data.text is string && data.text.size() > 0 && data.text.size() <= 500
+        && data.userId is string && data.userId == request.auth.uid
+        && data.userName is string && data.userName.size() <= 100
+        && data.createdAt == request.time;
+    }
+
+    // --- Collection Routes ---
+    match /comments/{commentId} {
+      // Secure List Queries: Publicly readable for the community
+      allow read: if true; 
+
+      // Create: Restricted to verified users
+      allow create: if isVerified() 
+        && isValidComment(incoming())
+        && isValidId(commentId);
+
+      // No updates or deletes allowed by clients to preserve historic feedback
+      allow update, delete: if false;
+    }
+  }
+}

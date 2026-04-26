@@ -1,0 +1,9 @@
+{
+  "name": "Xeval.JS Website",
+  "description": "Dynamic script injection library with template engine. Simple, powerful, and tech-oriented.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "Dynamic Scripting",
+    "Template Engine"
+  ]
+}

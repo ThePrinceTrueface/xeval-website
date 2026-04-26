@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-retro-black: #0a0a0b;
+  --color-retro-white: #e0e0e0;
+  --color-retro-gray: #151518;
+  --color-accent-green: #00ff9d;
+  --color-border-dark: #222222;
+}
+
+@layer base {
+  body {
+    @apply bg-retro-black text-retro-white font-sans selection:bg-accent-green selection:text-black;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+.terminal-window {
+  @apply bg-[#0c0c0e] border border-border-dark rounded-lg overflow-hidden shadow-2xl;
+}
+
+.terminal-header {
+  @apply bg-[#0e0e10] px-4 py-2 border-b border-border-dark flex items-center justify-between;
+}
+
+.grid-bg {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.glass {
+  @apply backdrop-blur-md bg-white/5 border border-white/10;
+}
+
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 157, 0.3);
+  }
+}
+
+/* Override Prism syntax highlighter backgrounds for transparency */
+pre[class*="language-"],
+code[class*="language-"] {
+  background: transparent !important;
+  text-shadow: none !important;
+  margin: 0 !important;
+}
