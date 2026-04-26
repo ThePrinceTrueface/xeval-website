@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import xeval from '../lib/xeval';
+import xeval from '@ebinasoft/xeval';
 import Editor from 'react-simple-code-editor';
 // @ts-ignore
 import { highlight, languages } from 'prismjs';

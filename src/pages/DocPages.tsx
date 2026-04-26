@@ -55,7 +55,7 @@ export const DocInstall = () => (
         <div className="space-y-2">
           <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/30 px-2 py-1 border border-white/10">Zero-Config CDN</span>
           <CodeBlock code={`<!-- Chargez xeval en haut de votre document -->
-<script src="https://cdn.example.com/xeval.min.js" type="module"></script>`} />
+<script src="https://cdn.jsdelivr.net/npm/@ebinasoft/xeval/dist/xeval.esm.min.js" type="module"></script>`} />
         </div>
         <div className="space-y-2">
             <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/30 px-2 py-1 border border-white/10">Package Manager</span>

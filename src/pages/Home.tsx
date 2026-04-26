@@ -22,8 +22,7 @@ export const Home = ({ user }: { user: User | null }) => {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
-    const currentUrl = window.location.origin;
-    setCdnLink(`<script src="${currentUrl}/xeval.min.js" type="module"></script>`);
+    setCdnLink('<script src="https://cdn.jsdelivr.net/npm/@ebinasoft/xeval/dist/xeval.esm.min.js" type="module"></script>');
   }, []);
 
   return (
@@ -69,7 +68,7 @@ export const Home = ({ user }: { user: User | null }) => {
               style={{ y: textY }}
               className="text-7xl md:text-[120px] font-bold uppercase tracking-[0.05em] leading-[0.85] mb-10"
             >
-              FASTEST <span className="text-accent-green">LOGIC</span><br/>LAYER
+              DYNAMIC <span className="text-accent-green">INJECTION</span><br/>ENGINE
             </motion.h1>
 
             <motion.p 
@@ -175,45 +174,28 @@ ui.inject({ context: { status: "Online" } });`} />
         </div>
       </section>
 
-      {/* Integration Section */}
-      <section id="download" className="py-20 px-6 max-w-7xl mx-auto">
+      <section id="integration" className="py-20 px-6 max-w-7xl mx-auto">
         <SectionTitle title="Integration Directe" subtitle="Interface Link" />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="p-10 glass rounded-3xl border-accent-green/20">
-            <h3 className="text-3xl font-bold mb-6 italic uppercase">CDN Link</h3>
-            <p className="text-white/60 mb-8 text-sm leading-relaxed">
-              Ajoutez simplement la librairie à votre projet via le lien direct. Pas besoin de build step pour commencer votre prototypage.
-            </p>
-            <div className="relative group">
-              <input 
-                readOnly 
-                value={cdnLink}
-                className="w-full bg-black/40 border border-white/20 rounded-xl px-5 py-4 font-mono text-xs text-white/80 pr-12 focus:outline-none focus:border-accent-green group-hover:border-white/40 transition-all"
-              />
-              <button 
-                onClick={() => {
-                  navigator.clipboard.writeText(cdnLink);
-                }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-accent-green transition-colors"
-              >
-                <Copy size={18} />
-              </button>
-            </div>
-          </div>
-
-          <div className="p-10 glass rounded-3xl border-accent-green/20">
-            <h3 className="text-3xl font-bold mb-6 italic uppercase">Local Source</h3>
-            <p className="text-white/60 mb-8 text-sm leading-relaxed">
-              Téléchargez le fichier source complet pour une gestion locale de vos ressources. Inclut les types JSDoc pour une intelligence native dans VS Code.
-            </p>
-            <a 
-              href="/xeval.min.js" 
-              download
-              className="w-full flex items-center justify-center gap-3 py-4 bg-accent-green text-black font-bold rounded-xl hover:bg-accent-green/80 transition-all active:scale-95 shadow-lg shadow-accent-green/20 uppercase tracking-widest text-sm"
+        <div className="p-10 glass rounded-3xl border-accent-green/20">
+          <h3 className="text-3xl font-bold mb-6 italic uppercase">CDN Link</h3>
+          <p className="text-white/60 mb-8 text-sm leading-relaxed max-w-2xl">
+            Ajoutez simplement la librairie à votre projet via le lien direct jsDelivr. Pas besoin de build step pour commencer votre prototypage. xeval est une bibliothèque pure JavaScript sans dépendances externes.
+          </p>
+          <div className="relative group">
+            <input 
+              readOnly 
+              value={cdnLink}
+              className="w-full bg-black/40 border border-white/20 rounded-xl px-5 py-4 font-mono text-xs text-white/80 pr-12 focus:outline-none focus:border-accent-green group-hover:border-white/40 transition-all"
+            />
+            <button 
+              onClick={() => {
+                navigator.clipboard.writeText(cdnLink);
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-accent-green transition-colors"
             >
-              <Download size={20} /> Download xeval.min.js
-            </a>
+              <Copy size={18} />
+            </button>
           </div>
         </div>
       </section>
