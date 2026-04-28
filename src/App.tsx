@@ -86,8 +86,9 @@ export default function App() {
               <RubyLogo className="w-6 h-6 grayscale" />
               <span className="text-lg font-mono font-bold tracking-tighter uppercase text-white/30">xeval</span>
             </div>
-            <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest">
-              © 2026 Developed for high-performance logic injection.
+            <div className="text-[10px] font-mono text-white/30 uppercase tracking-[0.15em] text-center md:text-right flex flex-col gap-1.5">
+              <span>© {new Date().getFullYear()} Ebinasoft. Powered by Ebinasoft.</span>
+              <span className="text-white/20">Site & xeval.js created by <span className="text-accent-green hover:underline cursor-pointer">Prince True-face</span>.</span>
             </div>
           </div>
         </footer>
