@@ -1,4 +1,4 @@
-import { Cpu, Layers, Terminal as TerminalIcon, Zap, Search, Check } from 'lucide-react';
+import { Cpu, Layers, Terminal as TerminalIcon, Zap, Search, Check, Box } from 'lucide-react';
 import { FeatureCard, SectionTitle } from '../components/Common';
 
 export const Features = () => {
@@ -39,6 +39,12 @@ export const Features = () => {
           />
           <FeatureCard 
             index={5}
+            icon={Box} 
+            title="Auto-Unwrap HTML" 
+            description="Since v5.3.0, single root elements are injected natively without wrapping divs, keeping your DOM immaculate."
+          />
+          <FeatureCard 
+            index={6}
             icon={Check} 
             title="Dual Callbacks" 
             description="Register fine-grained onInject hooks at both the engine level and the individual run level."

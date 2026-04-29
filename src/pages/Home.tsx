@@ -58,7 +58,7 @@ export const Home = ({ user }: { user: User | null }) => {
               className="mb-8"
             >
               <span className="px-2 py-1 bg-accent-green/10 text-accent-green text-[10px] font-mono border border-accent-green/30 uppercase tracking-tighter">
-                Version 5.1.0 — Moteur d'Injection Unifié
+                Version 5.3.0 — Callbacks, Caching & Auto-unwrap
               </span>
             </motion.div>
 
@@ -131,43 +131,39 @@ export const Home = ({ user }: { user: User | null }) => {
         
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
           <div className="lg:col-span-3">
-            <CodeBlock code={`// Importez xeval et préparez vos sources (JS, HTML, CSS)
+            <CodeBlock code={`// Chargez une source distante avec cache (v5.0.1+)
 import xeval from 'xeval';
 
-// Moteur de Script
-const script = xeval.prepare(\`
-  console.log("Hello, $$name!");
-  $$callback
-  callback();
-\`);
+const plugin = await xeval.loadFrom('/api/plugin.js', { ttl: 300000 });
+plugin.run({ context: { env: "prod" } });
 
-// Moteur HTML
-const ui = xeval.prepareHTML(\`
-  <div class="banner">Logic Layer: $$status</div>
-\`);
+// Moteur HTML avec auto-unwrap & callback (v5.3.0+)
+const btn = xeval.prepareHTML(\`<button class="btn">$$label</button>\`);
 
-// Injection synchronisée
-script.inject({ context: { name: "Dev", callback: () => alert("Logic run!") } });
-ui.inject({ context: { status: "Online" } });`} />
+// Injecté directement comme <button> (sans div wrapper)
+btn.run({ 
+  target: '#app',
+  context: { label: "Click Me" },
+  onInject: (el) => el.addEventListener('click', () => alert('Hello!'))
+});`} />
           </div>
           <div className="lg:col-span-2 space-y-8">
             <div className="space-y-2">
               <h3 className="text-2xl font-bold flex items-center gap-3 italic">
                 <Zap className="text-accent-green" size={20} />
-                Léger & Sans Dépendance
+                Smart Caching & Callbacks
               </h3>
               <p className="text-white/50 text-sm leading-relaxed">
-                xeval est une bibliothèque pure JavaScript sans dépendances externes. 
-                Une simple classe pour gérer toutes vos injections complexes.
+                Utilisez <code className="text-white">loadFrom()</code> avec gestion native du cache (TTL et stale fallback). Abonnez-vous précisément aux événements avec la nouvelle API <code className="text-white">onInject</code> intégrée.
               </p>
             </div>
             <div className="space-y-2">
               <h3 className="text-2xl font-bold flex items-center gap-3 italic text-accent-green">
                 <Layers className="text-accent-green" size={20} />
-                Unified Templates
+                Auto-Unwrap HTML
               </h3>
               <p className="text-white/50 text-sm leading-relaxed">
-                Utilisez la syntaxe <code className="text-white">$$key</code> pour une interpolation profonde dans tous vos types de fichiers injectés.
+                Depuis la v5.3.0, l'injection d'éléments HTML uniques (comme un simple <code className="text-white">&lt;button&gt;</code>) se fait nativement sans conteneur encapsuleur. Conservez un DOM propre et minimaliste.
               </p>
             </div>
           </div>

@@ -24,7 +24,7 @@ export const DocIntro = () => (
         <h3 className="text-4xl font-bold uppercase italic tracking-tighter">Introduction</h3>
       </div>
       <p className="text-white/70 text-lg leading-relaxed font-light">
-        <span className="text-white font-bold italic">xeval 5.1.0</span> n'est plus un simple injecteur de scripts. C'est un <span className="text-accent-green">Unified Runtime</span> conçu pour assembler dynamiquement des applications complexes. En regroupant la logique (JS), la structure (HTML) et le style (CSS) sous une interface commune basée sur les <span className="italic">CoreEngines</span>, xeval permet une orchestration totale de vos ressources éphémères.
+        <span className="text-white font-bold italic">xeval 5.3.0</span> n'est plus un simple injecteur de scripts. C'est un <span className="text-accent-green">Unified Runtime</span> conçu pour assembler dynamiquement des applications complexes. En regroupant la logique (JS), la structure (HTML) et le style (CSS) sous une interface commune basée sur les <span className="italic">CoreEngines</span>, xeval permet une orchestration totale de vos ressources éphémères.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-6 border border-white/5 bg-white/5 rounded-sm">
@@ -108,7 +108,7 @@ export const DocHtml = () => (
       <div>
         <h3 className="text-4xl font-bold uppercase italic mb-4 text-blue-400">HTML Engine</h3>
         <p className="text-white/70 max-w-2xl">
-          Générez des fragments d'UI réactifs. Le <code className="text-blue-400">HtmlEngine</code> injecte un wrapper sécurisé qui peut être mis à jour sans perte de référence DOM.
+          Générez des fragments d'UI réactifs. L'injection HTML est désormais <span className="font-bold">intelligente</span> : les éléments simples (ex: <code className="text-white">&lt;button&gt;</code>) sont injectés nativement sans conteneur superflu.
         </p>
       </div>
       <CodeBlock code={`const ui = xeval.prepareHTML(\`
@@ -231,7 +231,7 @@ export const DocCallbacks = () => (
       <div>
         <h3 className="text-4xl font-bold uppercase italic mb-4 text-yellow-500">Dual Callback System</h3>
         <p className="text-white/70 max-w-2xl">
-          xeval 5.1.0 introduit un système de callbacks à deux niveaux (moteur et run) permettant d'interagir nativement avec les éléments tout juste injectés.
+          Le système de callbacks à deux niveaux (moteur et run) permet d'interagir nativement avec les éléments tout juste injectés.
         </p>
       </div>
       <CodeBlock code={`const engine = xeval.prepareHTML(\`<p>$$text</p>\`)
